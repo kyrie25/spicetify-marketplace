@@ -31,7 +31,7 @@ class Card extends react.Component {
         this.visual;
 
         // From `fetchRepoExtensions()`
-        /** @type { { name: string; description: string; main: string; preview: string; } } */
+        /** @type { { name: string; description: string; main: string; preview: string; readme: string; } } */
         this.manifest;
         /** @type { string } */
         this.title;
@@ -43,6 +43,8 @@ class Card extends react.Component {
         this.imageURL;
         /** @type { string } */
         this.extensionURL;
+        /** @type { string } */
+        this.readmeURL;
         /** @type { number } */
         this.stars;
 
@@ -69,6 +71,10 @@ class Card extends react.Component {
             branch: this.branch,
             imageURL: this.imageURL,
             extensionURL: this.extensionURL,
+            readmeURL: this.readmeURL,
+
+            // TODO: saving stars to localstorage allows us to display on the "installed" tab,
+            // but it won't ever update then...
             stars: this.stars,
         }));
 
@@ -103,6 +109,10 @@ class Card extends react.Component {
         }
     }
 
+    showReadmePopup() {
+        openReadmeModal(this.title, this.readmeURL);
+    }
+
     render() {
         // Kill the card if it has been uninstalled on the "Installed" tab
         // TODO: is this kosher, or is there a better way to handle?
@@ -121,12 +131,13 @@ class Card extends react.Component {
             menu: react.createElement(this.menuType, {}),
         }, react.createElement("div", {
             className: cardClasses.join(" "),
-            // onClick: (event) => {
-            //     // TODO: Navigate to a page for the extension info on card click.
-            //     // We might want to add some href for a page for the extension
-            //     // History.push(this.href);
-            //     // event.preventDefault();
-            // },
+            onClick: (event) => {
+                // TODO: Navigate to a page for the extension info on card click.
+                // We might want to add some href for a page for the extension
+                // History.push(this.href);
+                // event.preventDefault();
+                this.showReadmePopup();
+            },
         }, react.createElement("div", {
             className: "main-card-draggable",
             draggable: "true",

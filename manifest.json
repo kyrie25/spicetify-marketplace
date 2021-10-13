@@ -9,6 +9,7 @@
         "SortBox.js",
         "TabBar.js",
         "Settings.js",
-        "ReloadModal.js"
+        "ReloadModal.js",
+        "ReadmeModal.js"
     ]
 }

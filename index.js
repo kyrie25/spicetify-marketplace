@@ -279,6 +279,8 @@ class Grid extends react.Component {
     }
 
     render() {
+        injectMarkdownLibs();
+
         return react.createElement("section", {
             className: "contentSpacing",
         },
@@ -337,6 +339,34 @@ async function getAllRepos() {
     // }
 
     return await Spicetify.CosmosAsync.get(url);
+}
+
+function injectMarkdownLibs() {
+    // <!-- Lightweight client-side loader that feature-detects and load polyfills only when necessary -->
+    // <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+
+    // <!-- Load the element definition -->
+    // <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+
+    // <!-- Simply set the `src` attribute to your MD file and win -->
+    // <zero-md src="README.md"></zero-md>
+
+    const alreadyInjected = !!window.ZeroMd;
+
+    if (alreadyInjected) return;
+
+    // Lightweight client-side loader that feature-detects and load polyfills only when necessary
+    const wcScript = document.createElement("script");
+    wcScript.defer = true;
+    wcScript.src = "https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js";
+    document.body.appendChild(wcScript);
+
+    // Load the element definition
+    const zmdScript = document.createElement("script");
+    zmdScript.defer = true;
+    zmdScript.type = "module";
+    zmdScript.src = "https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js";
+    document.body.appendChild(zmdScript);
 }
 
 function initializeExtension(manifest, user, repo, main, branch) {
@@ -429,6 +459,7 @@ async function fetchRepoExtensions(contents_url, branch, stars) {
             branch,
             imageURL: `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${manifest.preview}`,
             extensionURL: `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${manifest.main}`,
+            readmeURL:  `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${manifest.readme}`,
             stars,
         }));
 
