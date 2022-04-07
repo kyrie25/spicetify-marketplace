@@ -37,5 +37,8 @@ jobs:
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           git add .
+          if [ -z "$(git status --porcelain)" ]; then
+            exit 0
+          fi
           git commit -m "Built project"
           git push
