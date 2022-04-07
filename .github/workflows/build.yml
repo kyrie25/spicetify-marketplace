@@ -31,7 +31,6 @@ jobs:
         run: |
           npm run build
 
-        # https://github.community/t/how-does-one-commit-from-an-action/16127/10
       - name: Commit built files
       - uses: actions/checkout@v3
       - run: |
