@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the actions branch
+  push:
+    branches:
+      - actions
+  pull_request:
+    branches:
+      - actions
+
+jobs:
+  run-build:
+    name: Run build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Run build
+        run: |
+          npm run build
