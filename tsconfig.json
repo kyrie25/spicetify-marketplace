@@ -11,6 +11,6 @@
     // "strict": true,
     "importHelpers": true,
   },
-  "include": ["index.js"],
+  "include": ["src/index.js"],
   "exclude": ["node_modules"]
 }
